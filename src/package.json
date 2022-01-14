@@ -1,0 +1,18 @@
+{
+  "name": "forcebuy-activator",
+  "productName": "Forcebuy Activator",
+  "version": "1.0.7",
+  "description": "Easy access to any game https://forcebuy.ru",
+  "main": "./main.prod.js",
+  "author": {
+    "name": "youngtype",
+    "email": "support@forcebuy.ru",
+    "url": "https://forcebuy.ru"
+  },
+  "scripts": {
+    "electron-rebuild": "node -r ../.erb/scripts/BabelRegister.js ../.erb/scripts/ElectronRebuild.js",
+    "postinstall": "yarn electron-rebuild"
+  },
+  "license": "MIT",
+  "dependencies": {}
+}
