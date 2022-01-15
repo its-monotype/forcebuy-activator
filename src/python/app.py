@@ -16,14 +16,8 @@ from pywinauto.application import Application
 from pywinauto import Desktop
 from flask import Flask, jsonify, request
 from flask_cors import CORS
-from flask_limiter import Limiter
-from flask_limiter.util import get_remote_address
 
 app = Flask(__name__)
-limiter = Limiter(
-    app,
-    key_func=get_remote_address,
-)
 app_config = {"host": "0.0.0.0", "port": sys.argv[1]}
 
 
@@ -53,7 +47,6 @@ if "app.py" in sys.argv[0]:
 
 
 @app.route("/steam", methods=['POST'])
-@limiter.limit("1 per minute")
 def steam():
     data = request.get_json()
     login = data.get('login')
@@ -134,7 +127,6 @@ def generate_auth_code(shared_secret: str, timestamp: int = None) -> str:
 
 
 @app.route("/microsoft", methods=['POST'])
-@limiter.limit("1 per minute")
 def microsoft():
     try:
         data = request.get_json()
@@ -149,68 +141,68 @@ def microsoft():
 
         os.system("taskkill /IM WinStore.App.exe /F")
         time.sleep(2)
-        subprocess.Popen('powershell.exe Start-Process ms-windows-store:')
+        subprocess.Popen(
+            'powershell.exe Start-Process ms-windows-store:', shell=True)
         dlg = Desktop(backend="uia").window(
             title="Microsoft Store", class_name="ApplicationFrameWindow")
         if dlg.exists(timeout=10):
-            dlg.wait("visible", timeout=15).maximize().set_focus()
+            dlg.wait("visible").maximize().set_focus()
         else:
             raise ExpectedError('0x00001')
         # Нажатие иконки профиля Win10
         if (dlg.child_window(auto_id="UserProfileButton", control_type="Button", class_name="AppBarButton").exists(timeout=10)):
+            print('Нажатие иконки профиля Win10')
             dlg.child_window(auto_id="UserProfileButton", control_type="Button",
-                             class_name="AppBarButton").wait("visible", timeout=15).invoke()
+                             class_name="AppBarButton").wait("visible").invoke()
             dlg.child_window(auto_id="UserPopUpIdentity", control_type="ListItem",
-                             class_name="ListViewItem").wait("visible", timeout=15).invoke()
+                             class_name="ListViewItem").wait("visible").invoke()
+            print('Проверка выхода из профиля Win10')
+            # Проверка выхода из профиля Win10
+            if (dlg.child_window(auto_id="RemoveButton", control_type="Hyperlink", class_name="Hyperlink").exists(timeout=10)):
+                dlg.child_window(auto_id="RemoveButton", control_type="Hyperlink",
+                                 class_name="Hyperlink").wait("visible").invoke()
+                dlg.child_window(auto_id="UserProfileButton", control_type="Button",
+                                 class_name="AppBarButton").wait("visible").invoke()
+                dlg.child_window(auto_id="UserPopUpIdentity", control_type="ListItem",
+                                 class_name="ListViewItem").wait("visible").invoke()
         # Нажатие иконки профиля Win11
         elif (dlg.child_window(auto_id="ProfileButton", control_type="Button", class_name="Button").exists(timeout=10)):
+            print('Нажатие иконки профиля Win11')
             dlg.child_window(auto_id="ProfileButton", control_type="Button",
-                             class_name="Button").wait("visible", timeout=15).invoke()
+                             class_name="Button").wait("visible").invoke()
             # Проверка выхода из профиля Win11
-            if(dlg.child_window(auto_id="SignoutLink", control_type="Button", class_name="Hyperlink").exists(timeout=10)):
-                dlg.child_window(auto_id="SignoutLink", control_type="Button",
-                                 class_name="Hyperlink").wait("visible", timeout=15).invoke()
-                dlg.child_window(auto_id="UserProfileFlyout", control_type="Menu", class_name="MenuFlyout").child_window(
-                    auto_id="MsaSignInItem", control_type="MenuItem", class_name="MenuFlyoutItem").wait("visible", timeout=15).select()
-            # Переход к дальнейшему окну Win11
-            elif(dlg.child_window(auto_id="UserProfileFlyout", control_type="Menu", class_name="MenuFlyout").child_window(auto_id="MsaSignInItem", control_type="MenuItem", class_name="MenuFlyoutItem").exists(timeout=10)):
-                dlg.child_window(auto_id="UserProfileFlyout", control_type="Menu", class_name="MenuFlyout").child_window(
-                    auto_id="MsaSignInItem", control_type="MenuItem", class_name="MenuFlyoutItem").wait("visible", timeout=15).select()
+            print('Проверка выхода из профиля Win11')
+            dlg.child_window(auto_id="SignoutLink", control_type="Hyperlink",
+                             class_name="Hyperlink").wait("visible").invoke()
+            dlg.child_window(auto_id="MsaSignInItem", control_type="MenuItem",
+                             class_name="MenuFlyoutItem").wait("visible").invoke()
         else:
             raise ExpectedError(
                 '0x00002')
-        # Проверка выхода из профиля Win10
-        if (dlg.child_window(auto_id="RemoveButton", control_type="Hyperlink", class_name="Hyperlink").exists(timeout=10)):
-            dlg.child_window(auto_id="RemoveButton", control_type="Hyperlink",
-                             class_name="Hyperlink").wait("visible", timeout=15).invoke()
-            dlg.child_window(auto_id="UserProfileButton", control_type="Button",
-                             class_name="AppBarButton").wait("visible", timeout=15).invoke()
-            dlg.child_window(auto_id="UserPopUpIdentity", control_type="ListItem",
-                             class_name="ListViewItem").wait("visible", timeout=15).invoke()
         # Выбор другой учётной записи
         if (dlg.child_window(auto_id="NewAccounts", control_type="List", class_name="ListView").exists(timeout=10)):
             try:
                 dlg.child_window(auto_id="NewAccounts", control_type="List", class_name="ListView").child_window(
-                    auto_id="Provider_0", control_type="ListItem", class_name="ListViewItem").wait("visible", timeout=15).select()
+                    auto_id="Provider_0", control_type="ListItem", class_name="ListViewItem").select()
             except:
                 dlg.child_window(title_re="Email and accounts", class_name="Windows.UI.Core.CoreWindow", control_type="Window").child_window(
-                    class_name="ScrollViewer", control_type="Pane").wait("visible", timeout=15).scroll(direction="down", amount="line", count=10)
+                    class_name="ScrollViewer", control_type="Pane").scroll(direction="down", amount="line", count=10)
                 dlg.child_window(auto_id="NewAccounts", control_type="List", class_name="ListView").child_window(
-                    auto_id="Provider_0", control_type="ListItem", class_name="ListViewItem").wait("visible", timeout=10).select()
+                    auto_id="Provider_0", control_type="ListItem", class_name="ListViewItem").wait("visible").select()
             dlg.child_window(auto_id="ContinueButton", control_type="Button",
-                             class_name="Button").wait("visible", timeout=15).invoke()
+                             class_name="Button").invoke()
         else:
             raise ExpectedError('0x00003')
         # Ввод логина
         if dlg.child_window(auto_id="i0116", control_type="Edit").exists(timeout=10):
             dlg.child_window(auto_id="i0116", control_type="Edit").wait(
-                "visible", timeout=15).set_text(login)
+                "visible").set_text(login)
         else:
             raise ExpectedError('0x00004')
         # Нажатие кнопки "Далее"
         if dlg.child_window(auto_id="idSIButton9", control_type="Button").exists(timeout=10):
             dlg.child_window(auto_id="idSIButton9", control_type="Button").wait(
-                "visible", timeout=15).invoke()
+                "visible").invoke()
         else:
             raise ExpectedError('0x00005')
         # Пользователь не найден
@@ -219,13 +211,13 @@ def microsoft():
         # Ввод пароля
         if dlg.child_window(auto_id="i0118", control_type="Edit").exists(timeout=10):
             dlg.child_window(auto_id="i0118", control_type="Edit").wait(
-                "visible", timeout=15).set_text(password)
+                "visible").set_text(password)
         else:
             raise ExpectedError('0x00007')
         # Нажатие кнопки "Далее"
         if dlg.child_window(auto_id="idSIButton9", control_type="Button").exists(timeout=10):
             dlg.child_window(auto_id="idSIButton9", control_type="Button").wait(
-                "visible", timeout=15).invoke()
+                "visible").invoke()
         else:
             raise ExpectedError('0x00008')
         # Нажатие кнопки "Забыли пароль"
@@ -234,23 +226,23 @@ def microsoft():
         # Нажатие кнопки "Войти другим способом"
         if (dlg.child_window(auto_id="signInAnotherWay", control_type="Hyperlink").exists(timeout=10)):
             dlg.child_window(auto_id="signInAnotherWay", control_type="Hyperlink").wait(
-                "visible", timeout=15).invoke()
+                "visible").invoke()
         # Выбор Email
         if dlg.child_window(auto_id="idDiv_SAOTCS_Proofs", control_type="List").exists(timeout=10):
             dlg.child_window(auto_id="idDiv_SAOTCS_Proofs", control_type="List").child_window(
-                title_re=rf".*{email[:2]}\*\*\*\*\.*", control_type="ListItem").child_window(control_type="Button").wait("visible", timeout=15).invoke()
+                title_re=rf".*{email[:2]}\*\*\*\*\.*", control_type="ListItem").child_window(control_type="Button").wait("visible").invoke()
         else:
             raise ExpectedError('0x00010')
         # Ввод Email
         if dlg.child_window(auto_id="idTxtBx_SAOTCS_ProofConfirmation", control_type="Edit").exists(timeout=10):
             dlg.child_window(auto_id="idTxtBx_SAOTCS_ProofConfirmation",
-                             control_type="Edit").wait("visible", timeout=15).set_text(email)
+                             control_type="Edit").wait("visible").set_text(email)
         else:
             raise ExpectedError('0x00011')
         # Нажатие кнопки "Отправить код"
         if dlg.child_window(auto_id="idSubmit_SAOTCS_SendCode", control_type="Button").exists(timeout=10):
             dlg.child_window(auto_id="idSubmit_SAOTCS_SendCode",
-                             control_type="Button").wait("visible", timeout=15).invoke()
+                             control_type="Button").wait("visible").invoke()
         else:
             raise ExpectedError('0x00012')
         # Если не получен код на 1 Email
@@ -261,14 +253,14 @@ def microsoft():
             try:
                 # Нажатие кнопки "Назад"
                 dlg.child_window(auto_id="idBtn_Back",
-                                 control_type="Button").wait("visible", timeout=15).invoke()
+                                 control_type="Button").wait("visible").invoke()
                 dlg.child_window(auto_id="idDiv_SAOTCS_Proofs", control_type="List").child_window(
-                    title_re=rf".*{secondEmail[:2]}\*\*\*\*\.*", control_type="ListItem").child_window(control_type="Button").wait("visible", timeout=15).invoke()
+                    title_re=rf".*{secondEmail[:2]}\*\*\*\*\.*", control_type="ListItem").child_window(control_type="Button").wait("visible").invoke()
                 secondMail = "true"
                 dlg.child_window(auto_id="idTxtBx_SAOTCS_ProofConfirmation",
-                                 control_type="Edit").wait("visible", timeout=15).set_text(secondEmail)
+                                 control_type="Edit").wait("visible").set_text(secondEmail)
                 dlg.child_window(auto_id="idSubmit_SAOTCS_SendCode",
-                                 control_type="Button").wait("visible", timeout=15).invoke()
+                                 control_type="Button").wait("visible").invoke()
             except:
                 raise ExpectedError('0x00013')
         time.sleep(10)
@@ -289,7 +281,7 @@ def microsoft():
         # Ввод кода с почты
         if dlg.child_window(auto_id="idTxtBx_SAOTCC_OTC", control_type="Edit").exists(timeout=10):
             dlg.child_window(auto_id="idTxtBx_SAOTCC_OTC", control_type="Edit").wait(
-                "visible", timeout=15).set_text(email_code)
+                "visible").set_text(email_code)
         else:
             raise ExpectedError("0x00015")
         # Нажатие кнопки "Далее"
@@ -301,7 +293,7 @@ def microsoft():
         # Нажатие кнопки "Только Microsoft"
         if (dlg.child_window(auto_id="skipLink", control_type="Hyperlink").exists(timeout=10)):
             dlg.child_window(auto_id="skipLink", control_type="Hyperlink").wait(
-                "visible", timeout=15).invoke()
+                "visible").invoke()
         try:
             dlg.child_window(auto_id="footer", control_type="Group").wait_not(
                 "exists", timeout=10)
@@ -315,9 +307,10 @@ def microsoft():
     except ExpectedError as e:
         os.system("taskkill /IM WinStore.App.exe /F")
         return jsonify({'message': str(e)}), 403
-    except Exception as e:
-        os.system("taskkill /IM WinStore.App.exe /F")
-        return jsonify({'message': '0x00000'}), 403
+    # except Exception as e:
+    #     print(e)
+    #     os.system("taskkill /IM WinStore.App.exe /F")
+    #     return jsonify({'message': '0x00000'}), 403
 
 
 class ExpectedError(Exception):

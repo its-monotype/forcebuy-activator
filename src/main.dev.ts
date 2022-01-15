@@ -142,12 +142,12 @@ const createWindow = async () => {
   });
 
   ipcMain.on('close-me', (event, arg) => {
-    app.quit();
     shutdown(port);
   });
 
   browserWindows.mainWindow.on('closed', () => {
     browserWindows.mainWindow = null;
+    shutdown(port);
   });
 
   // if (process.env.NODE_ENV === 'development') {
