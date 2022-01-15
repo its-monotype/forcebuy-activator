@@ -59,14 +59,14 @@
     ],
     "publish": {
       "provider": "github",
-      "owner": "HexagonbutApSenT",
+      "owner": "hexagonindev",
       "repo": "forcebuy-activator",
       "token": "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"
     }
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/HexagonbutApSenT/forcebuy-activator"
+    "url": "https://github.com/hexagonindev/forcebuy-activator"
   },
   "author": {
     "name": "forcebuy.ru"
