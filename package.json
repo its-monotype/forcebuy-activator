@@ -6,7 +6,7 @@
     "build": "concurrently \"yarn build:main\" \"yarn build:renderer\" \"yarn build:python\"",
     "build:main": "cross-env NODE_ENV=production webpack --config ./.erb/configs/webpack.config.main.prod.babel.js",
     "build:renderer": "cross-env NODE_ENV=production webpack --config ./.erb/configs/webpack.config.renderer.prod.babel.js",
-    "build:python": "pyinstaller --noconsole --noconfirm --clean --hidden-import flask --hidden-import flask_limiter --distpath ./python --paths ./src/python/venv/Lib/site-packages --icon ./assets/icon.ico ./src/python/app.py",
+    "build:python": "pyinstaller --noconsole --noconfirm --clean --hidden-import flask --distpath ./python --paths ./src/python/venv/Lib/site-packages --icon ./assets/icon.ico ./src/python/app.py",
     "rebuild": "electron-rebuild --parallel --types prod,dev,optional --module-dir src",
     "lint": "cross-env NODE_ENV=development eslint . --cache --ext .js,.jsx,.ts,.tsx",
     "package": "rimraf src/dist && yarn build && electron-builder build --win --publish never",
