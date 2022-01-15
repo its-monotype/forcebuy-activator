@@ -6,7 +6,7 @@ import { Button } from '../Button/Button';
 import Axios from '../../core/axios';
 import { getHWID } from 'hwid';
 import { ipcRenderer } from 'electron';
-import { Info, Lifebuoy } from 'phosphor-react';
+import { AppWindow, Question } from 'phosphor-react';
 import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
 
@@ -71,13 +71,12 @@ export const LoginStep: React.FC = () => {
       const errorType: string = error.response.data.message;
       let errorMsg: string;
       errorType === 'notFound'
-        ? (errorMsg = 'No such access code was found, try again')
+        ? (errorMsg = t('NotFoundText'))
         : errorType === 'alreadyLinked'
-        ? (errorMsg = 'This access code is already linked to another PC.')
+        ? (errorMsg = t('AlreadyLinkedText'))
         : errorType === 'blocked'
-        ? (errorMsg =
-            'You are blocked, write to the seller to clarify the reason.')
-        : 'Unknown error';
+        ? (errorMsg = t('BlockedText'))
+        : t('Unknown error');
       setError('key', {
         type: 'manual',
         message: errorMsg,
@@ -116,8 +115,7 @@ export const LoginStep: React.FC = () => {
         </h2>
         <p className="mt-3 text-gray-800">
           {t(
-            'Use the access code given to you. 1 key for 1 PC, to reset the binding, write to the seller',
-            '.'
+            'Use the access code given to you. 1 access code for 1 PC, to reset the binding, write to the seller'
           )}
         </p>
       </div>
@@ -163,7 +161,7 @@ export const LoginStep: React.FC = () => {
       <div className="flex items-center justify-between mt-5">
         <div className="text-center sm:text-left whitespace-nowrap">
           <div className="flex items-center transition duration-200 px-3 py-3 font-normal text-sm rounded-lg text-gray-500 ">
-            <Info className="w-5 h-5 inline-block align-text-top" />
+            <AppWindow className="w-5 h-5 inline-block align-text-top" />
             <span className="inline-block ml-1">{appVersion}</span>
           </div>
         </div>
@@ -174,7 +172,7 @@ export const LoginStep: React.FC = () => {
             }
             className="flex items-ceter transition duration-200 px-4 py-3 cursor-pointer font-normal text-sm rounded-lg text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-200 focus:ring-2 focus:ring-gray-400 focus:ring-opacity-50 ring-inset"
           >
-            <Lifebuoy className="w-5 h-5 inline-block align-text-bottom" />
+            <Question className="w-5 h-5 inline-block align-text-bottom" />
             <span className="inline-block ml-1">{t('Help')}</span>
           </button>
         </div>

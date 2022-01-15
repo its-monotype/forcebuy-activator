@@ -1,4 +1,7 @@
 {
+  "AlreadyLinkedText": "This access code is already linked to another PC.",
+  "BlockedText": "You are blocked, write to the seller to clarify the reason.",
+  "NotFoundText": "No such access code found, please try again.",
   "Continue": "Continue",
   "Get Started": "Get Started",
   "Back": "Back",
@@ -6,7 +9,7 @@
   "Help": "Help",
   "Please enter an access code": "Please enter an access code",
   "Access code": "Access code",
-  "Use the access code given to you. 1 key for 1 PC, to reset the binding, write to the seller": "Use the access code given to you. 1 key for 1 PC, to reset the binding, write to the seller",
+  "Use the access code given to you. 1 access code for 1 PC, to reset the binding, write to the seller": "Use the access code given to you. 1 access code for 1 PC, to reset the binding, write to the seller",
   "Enter the access code": "Enter the access code",
   "Loading": "Loading",
   "Unknown error": "Unknown error",

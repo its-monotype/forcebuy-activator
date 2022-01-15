@@ -38,7 +38,10 @@ src/renderer.prod.js
 src/renderer.prod.js.map
 src/style.css
 src/style.css.map
+app.spec
 dist
+/python
+build
 dll
 main.js
 main.js.map

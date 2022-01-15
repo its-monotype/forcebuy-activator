@@ -106,7 +106,7 @@ const createWindow = async () => {
     process.env.NODE_ENV === 'development' ||
     process.env.DEBUG_PROD === 'true'
   ) {
-    spawn(`python ./src/app.py ${port}`, {
+    spawn(`python ./src/python/app.py ${port}`, {
       detached: true,
       shell: true,
       stdio: 'inherit',

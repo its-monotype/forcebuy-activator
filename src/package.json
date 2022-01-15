@@ -1,11 +1,11 @@
 {
   "name": "forcebuy-activator",
   "productName": "Forcebuy Activator",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "Easy access to any game https://forcebuy.ru",
   "main": "./main.prod.js",
   "author": {
-    "name": "youngtype",
+    "name": "HexagonbutApSenT",
     "email": "support@forcebuy.ru",
     "url": "https://forcebuy.ru"
   },
