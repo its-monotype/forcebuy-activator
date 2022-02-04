@@ -12,9 +12,6 @@
     background: white;
     height: 100vh;
     overflow-y: hidden;
-    display: flex;
-    justify-content: center;
-    align-items: center;
     -moz-user-select: none;
     -webkit-user-select: none;
     -ms-user-select: none;

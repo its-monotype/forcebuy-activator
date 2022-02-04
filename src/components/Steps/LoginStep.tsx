@@ -99,7 +99,7 @@ export const LoginStep: React.FC = () => {
   };
 
   return isLoading ? (
-    <div className="text-center font-medium text-gray-900 text-lg">
+    <div className="w-full text-center font-medium text-gray-900 dark:text-white text-lg">
       {t('Loading')}...
     </div>
   ) : (
@@ -108,12 +108,13 @@ export const LoginStep: React.FC = () => {
       animate="in"
       exit="out"
       variants={pageVariants}
+      className="px-12 py-6"
     >
       <div className="text-center">
-        <h2 className="text-3xl font-bold text-gray-900">
+        <h2 className="text-3xl font-bold text-gray-900 dark:text-white">
           {t('Enter the access code')}
         </h2>
-        <p className="mt-3 text-gray-800">
+        <p className="mt-3 text-gray-900 dark:text-gray-400">
           {t(
             'Use the access code given to you. 1 access code for 1 PC, to reset the binding, write to the seller'
           )}
@@ -125,8 +126,8 @@ export const LoginStep: React.FC = () => {
             className={`border ${
               errors.key && errors.key.type
                 ? 'border-red-500'
-                : 'border-gray-300'
-            } focus:border-blue-500 px-4 py-3 placeholder-gray-400 text-gray-700 bg-white rounded-md text-base focus:outline-none w-full transition-colors ease-out duration-200`}
+                : 'border-gray-300 dark:border-gray-700'
+            } focus:border-blue-500 px-4 py-3  placeholder-gray-400 dark:text-gray-100 text-gray-700 bg-white dark:bg-gray-900 rounded-md text-base focus:outline-none w-full transition-colors ease-out duration-200`}
             {...rest}
             placeholder={t('Access code')}
             type="text"
@@ -160,7 +161,7 @@ export const LoginStep: React.FC = () => {
       </form>
       <div className="flex items-center justify-between mt-5">
         <div className="text-center sm:text-left whitespace-nowrap">
-          <div className="flex items-center transition duration-200 px-3 py-3 font-normal text-sm rounded-lg text-gray-500 ">
+          <div className="flex items-center transition duration-200 px-3 py-3 font-normal text-sm rounded-lg text-gray-500 dark:text-gray-400 ">
             <AppWindow className="w-5 h-5 inline-block align-text-top" />
             <span className="inline-block ml-1">{appVersion}</span>
           </div>
@@ -170,7 +171,7 @@ export const LoginStep: React.FC = () => {
             onClick={() =>
               openExternalLink('https://plati.market/seller/olmax03/867871/')
             }
-            className="flex items-ceter transition duration-200 px-4 py-3 cursor-pointer font-normal text-sm rounded-lg text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-200 focus:ring-2 focus:ring-gray-400 focus:ring-opacity-50 ring-inset"
+            className="flex items-ceter transition duration-200 px-4 py-3 cursor-pointer font-normal text-sm rounded-lg text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 focus:outline-none dark:focus:bg-gray-700 focus:bg-gray-200 focus:ring-2 focus:ring-gray-400 dark:focus:ring-gray-600 focus:ring-opacity-50 ring-inset"
           >
             <Question className="w-5 h-5 inline-block align-text-bottom" />
             <span className="inline-block ml-1">{t('Help')}</span>

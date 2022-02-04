@@ -42,7 +42,9 @@ export const MicrosoftSteps: React.FC = () => {
 
   return (
     <LocalStepContext.Provider value={{ step, onNextStep, onPrevStep }}>
-      <Step />
+      <div className="px-10 py-6">
+        <Step />
+      </div>
     </LocalStepContext.Provider>
   );
 };

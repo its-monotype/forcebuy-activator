@@ -3,7 +3,8 @@ import React from 'react';
 
 const colors = {
   green: 'bg-green-800',
-  gray: 'bg-gray-800 hover:bg-gray-900 focus:ring-gray-200',
+  gray:
+    'bg-gray-800 hover:bg-gray-700 focus:ring-gray-200 dark:focus:ring-gray-800',
 };
 
 const types = {
@@ -36,8 +37,9 @@ export const Button: React.FC<ButtonProps> = ({
       type={type}
       className={clsx(
         className,
-        'w-full text-white py-3 px-8 rounded-lg font-medium text-lg focus:outline-none focus:ring-4 transition-colors duration-200',
-        colors[color] || 'bg-blue-500 hover:bg-blue-600 focus:ring-blue-200'
+        'w-full text-white py-3 px-8 rounded-lg font-medium text-lg focus:outline-none focus:ring-2 transition-colors duration-200',
+        colors[color] ||
+          'bg-blue-500 hover:bg-blue-600 focus:ring-blue-200 dark:focus:ring-blue-500'
       )}
       disabled={disabled}
     >

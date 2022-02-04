@@ -29,12 +29,14 @@ export const StepB = () => {
       exit="out"
       variants={pageVariants}
     >
-      <div className="mb-10 text-center">
-        <h2 className=" text-lg text-gray-900">{t('Common Buyer Mistakes')}</h2>
-        <h1 className="font-bold text-3xl text-gray-900 mt-2">
+      <div className="mb-14 text-left">
+        <h2 className=" text-lg text-gray-900 dark:text-white">
+          {t('Common Buyer Mistakes')}
+        </h2>
+        <h1 className="font-bold text-3xl text-gray-900 dark:text-white mt-2">
           {gameData.name}
         </h1>
-        <p className="mt-6 text-gray-900 leading-7 tracking-wide">
+        <p className="mt-6 text-gray-900 dark:text-white leading-7 tracking-wide">
           <span className="font-medium">
             {t('Mistake')} {t('#')}1
           </span>{' '}
@@ -43,7 +45,7 @@ export const StepB = () => {
           )}
           .
         </p>
-        <p className="mt-3 text-gray-900 leading-7 tracking-wide">
+        <p className="mt-3 text-gray-900 dark:text-white leading-7 tracking-wide">
           <span className="font-medium">
             {t('Mistake')} {t('#')}2
           </span>{' '}

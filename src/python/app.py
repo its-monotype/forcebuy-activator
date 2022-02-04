@@ -172,10 +172,15 @@ def microsoft():
                              class_name="Button").wait("visible").invoke()
             # Проверка выхода из профиля Win11
             print('Проверка выхода из профиля Win11')
-            dlg.child_window(auto_id="SignoutLink", control_type="Hyperlink",
-                             class_name="Hyperlink").wait("visible").invoke()
-            dlg.child_window(auto_id="MsaSignInItem", control_type="MenuItem",
-                             class_name="MenuFlyoutItem").wait("visible").invoke()
+            if dlg.child_window(auto_id="SignoutLink", control_type="Hyperlink",
+                             class_name="Hyperlink").exists(timeout=10):
+                dlg.child_window(auto_id="SignoutLink", control_type="Hyperlink",
+                                class_name="Hyperlink").wait("visible").invoke()
+                dlg.child_window(auto_id="MsaSignInItem", control_type="MenuItem",
+                                class_name="MenuFlyoutItem").wait("visible").invoke()
+            else:
+              dlg.child_window(auto_id="MsaSignInItem", control_type="MenuItem",
+                                class_name="MenuFlyoutItem").wait("visible").invoke()
         else:
             raise ExpectedError(
                 '0x00002')
@@ -307,10 +312,10 @@ def microsoft():
     except ExpectedError as e:
         os.system("taskkill /IM WinStore.App.exe /F")
         return jsonify({'message': str(e)}), 403
-    # except Exception as e:
-    #     print(e)
-    #     os.system("taskkill /IM WinStore.App.exe /F")
-    #     return jsonify({'message': '0x00000'}), 403
+    except Exception as e:
+        print(e)
+        os.system("taskkill /IM WinStore.App.exe /F")
+        return jsonify({'message': '0x00000'}), 403
 
 
 class ExpectedError(Exception):

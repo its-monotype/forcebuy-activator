@@ -31,18 +31,20 @@ export const StepA = () => {
       exit="out"
       variants={pageVariants}
     >
-      <div className="mb-10 text-center">
-        <h2 className=" text-lg text-gray-900">{t('The basics')}</h2>
-        <h1 className="font-bold text-3xl text-gray-900 mt-2">
+      <div className="mb-14 text-left">
+        <h2 className=" text-lg text-gray-900 dark:text-white">
+          {t('The basics')}
+        </h2>
+        <h1 className="font-bold text-3xl text-gray-900 dark:text-white mt-2">
           {gameData.name}
         </h1>
-        <p className="mt-6 text-gray-900 leading-7 tracking-wide">
+        <p className="mt-6 text-gray-900 dark:text-white leading-7 tracking-wide">
           {t(
             'The activation process will not take much time, if you have any difficulties - write to the seller in the chat. Do not forget to leave a review'
           )}
           .
         </p>
-        <p className="mt-3 text-gray-900 leading-7 tracking-wide">
+        <p className="mt-3 text-gray-900 dark:text-white leading-7 tracking-wide">
           {t(
             'To play, you need the Rockstar Games Launcher which you can download from the'
           )}{' '}

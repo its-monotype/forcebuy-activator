@@ -10,7 +10,7 @@
 import 'core-js/stable';
 import 'regenerator-runtime/runtime';
 import path from 'path';
-import { app, BrowserWindow, ipcMain, shell } from 'electron';
+import { app, BrowserWindow, ipcMain, nativeTheme, shell } from 'electron';
 import { autoUpdater, UpdateCheckResult } from 'electron-updater';
 import log from 'electron-log';
 import getPort from 'get-port';
@@ -92,7 +92,7 @@ const createWindow = async () => {
   browserWindows.mainWindow = new BrowserWindow({
     autoHideMenuBar: true,
     show: false,
-    width: 450,
+    width: 580,
     height: 580,
     resizable: false,
     icon: getAssetPath('icon.png'),
@@ -106,11 +106,17 @@ const createWindow = async () => {
     process.env.NODE_ENV === 'development' ||
     process.env.DEBUG_PROD === 'true'
   ) {
-    spawn(`python ./src/python/app.py ${port}`, {
-      detached: true,
-      shell: true,
-      stdio: 'inherit',
-    });
+    spawn(
+      `${path.join(
+        __dirname,
+        '/python/venv/Scripts/python.exe'
+      )} ./src/python/app.py ${port}`,
+      {
+        detached: true,
+        shell: true,
+        stdio: 'inherit',
+      }
+    );
   } else {
     spawn(`start ./resources/python/app/app.exe ${port}`, {
       detached: false,
@@ -299,6 +305,12 @@ ipcMain.on('close-activation-window', () => {
 
 ipcMain.on('app-version', (event) => {
   event.sender.send('app-version', { version: app.getVersion() });
+});
+
+ipcMain.on('app-theme', (event) => {
+  event.sender.send('app-theme', {
+    theme: nativeTheme.shouldUseDarkColors ? 'dark' : 'light',
+  });
 });
 
 ipcMain.on('assets-path', (event) => {

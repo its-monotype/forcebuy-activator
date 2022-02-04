@@ -22,6 +22,18 @@ cd src/python
 virtualenv venv
 ```
 
+FIX Syntax error when trying to import comtypes:
+
+```bash
+# write it in src/python dir
+source venv/Scripts/activate
+pip install setuptools==57.0.0
+pip install wheel==0.36.2
+pip uninstall comtypes
+pip install --no-cache-dir comtypes
+pip install -r requirements.txt
+```
+
 Activate Virtual Environment and install requirements:
 
 ```bash

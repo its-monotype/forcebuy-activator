@@ -42,6 +42,8 @@ export const FinalStep = () => {
         password: gameData.password,
         email: gameData.email,
         emailPassword: gameData.emailPassword,
+        secondEmail: gameData.secondEmail,
+        secondEmailPassword: gameData.secondEmailPassword,
         successCallback: (response) => {
           // Success
           if (response.data.message === 'success') {
@@ -97,26 +99,29 @@ export const FinalStep = () => {
       animate="in"
       exit="out"
       variants={pageVariants}
+      className="px-10 py-6"
     >
-      <div className="mb-10 text-center">
-        <h2 className="font-medium text-xl text-gray-900">{t('Success')}!</h2>
-        <h1 className="font-bold text-3xl text-gray-900 mt-2">
+      <div className="mb-14 text-left">
+        <h2 className="font-medium text-xl text-gray-900 dark:text-white">
+          {t('Success')}!
+        </h2>
+        <h1 className="font-bold text-3xl text-gray-900 dark:text-white mt-2">
           {gameData.name}
         </h1>
         {gameData.service === 'Microsoft' && isWindowsHello && (
-          <p className="mt-6 text-gray-900 leading-7 tracking-wide">
+          <p className="mt-6 text-gray-900 dark:text-white leading-7 tracking-wide">
             {t('Enter Windows Hello code in MS Store (PINCODE from your PC)')}.
           </p>
         )}
         {gameData.service === 'Microsoft' ? (
-          <p className="mt-6 text-gray-900 leading-7 tracking-wide">
+          <p className="mt-6 text-gray-900 dark:text-white leading-7 tracking-wide">
             {t(
               'Then you can close this window, find the game in the search, put the game on download, wait for the download and enjoy the gameplay'
             )}
             .
           </p>
         ) : (
-          <p className="mt-3 text-gray-900 leading-7 tracking-wide">
+          <p className="mt-3 text-gray-900 dark:text-white leading-7 tracking-wide">
             {t(
               'Then you can close this window, find the game in the library, put the game on download, wait for the game to load, switch Steam to offline mode, start the game and enjoy the gameplay'
             )}
@@ -139,7 +144,7 @@ export const FinalStep = () => {
       exit="out"
       variants={pageVariants}
     >
-      <div className="text-center font-bold text-gray-900 text-2xl mb-10">
+      <div className="text-center font-bold text-gray-900 dark:text-white text-2xl mb-10">
         {t('Error')} <br />
         {t('Error code')}: {errorCode}. {t('Try Again or write to the seller')}.
       </div>
@@ -152,7 +157,7 @@ export const FinalStep = () => {
       exit="out"
       variants={pageVariants}
     >
-      <div className="text-center font-bold text-gray-900 text-2xl mb-10">
+      <div className="text-center font-bold text-gray-900 dark:text-white text-2xl mb-10">
         {t('Unknown Error')}
       </div>
     </motion.div>

@@ -66,6 +66,20 @@ function App() {
   const [gameData, setGameData] = React.useState<Game>();
   const [activationData, setActivationData] = React.useState<Activation>();
 
+  React.useEffect(() => {
+    const getTheme = () => {
+      //Get the current version
+      ipcRenderer.send('app-theme');
+      ipcRenderer.on('app-theme', (event, arg) => {
+        ipcRenderer.removeAllListeners('app-theme');
+        if (arg.theme === 'dark') {
+          document.querySelector('html').classList.add('dark');
+        }
+      });
+    };
+    getTheme();
+  }, []);
+
   return (
     <MainContext.Provider
       value={{
@@ -79,7 +93,7 @@ function App() {
         setActivationData,
       }}
     >
-      <div className="p-8">
+      <div className="dark:bg-gray-900 bg-white h-screen overflow-y-hidden relative flex justify-center items-center w-full min-w-full">
         <AnimatePresence>
           <Step />
         </AnimatePresence>

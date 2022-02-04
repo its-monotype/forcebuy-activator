@@ -1,7 +1,7 @@
 {
   "name": "forcebuy-activator",
   "productName": "Forcebuy Activator",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "description": "Easy access to any game https://forcebuy.ru",
   "main": "./main.prod.js",
   "author": {

@@ -59,12 +59,14 @@ export const StepC = () => {
       exit="out"
       variants={pageVariants}
     >
-      <div className="mb-10 text-center">
-        <h2 className=" text-lg text-gray-900">{t('Gaining access')}</h2>
-        <h1 className="font-bold text-3xl text-gray-900 mt-2">
+      <div className="mb-14 text-left">
+        <h2 className=" text-lg text-gray-900 dark:text-white">
+          {t('Gaining access')}
+        </h2>
+        <h1 className="font-bold text-3xl text-gray-900 dark:text-white mt-2">
           {gameData.name}
         </h1>
-        <p className="mt-6 text-gray-900 leading-7 tracking-wide">
+        <p className="mt-6 text-gray-900 dark:text-white leading-7 tracking-wide">
           {t(
             'Logging into our account is carried out without your intervention and is needed to gain access to the game. During activation, do not interact with the PC to rule out problems'
           )}
